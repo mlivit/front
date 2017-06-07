@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Teaser Tool</title>
+<style type="text/css">
+html, body {
+	/*display: flex;*/
+	/*position: relative;*/
+}
+.image-url input {
+	font-size: 20px;
+	width: 100%;
+	line-height: 22px;
+}
+.image-url.error {
+	border: 1px solid red;
+}
+.image-url.success {
+	border: 1px solid green;
+}
+.teaser-container  {
+	position: relative;
+	display: flex;
+}
+.teaser-1 {
+	/*position: absolute;*/
+	width: 100%;
+	height: auto;
+	height: 100%;
+}
+
+.links-map {
+	position: absolute;
+    display: flex;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    top: 0;
+}
+
+.spliter-map {
+	position: absolute;
+    display: flex;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    top: 0;
+}
+
+.spliterContainer {
+	position: relative;
+	display: flex;
+}
+.spliter {
+	width: 5px;
+	height: 100%;
+	position: absolute;
+	right:   0;
+	top: 0;
+	background: red;
+	z-index: 3;
+
+}
+.spliter:hover {
+	cursor: col-resize;
+}
+
+.closeButton {
+	position: absolute;
+	z-index: 1;
+	right: 0;
+	width: 20px;
+	height: 20px;
+	background: red;
+	color: white;
+	cursor: pointer;
+	padding: 2px;
+}
+
+.section-link {
+	display: block;
+	width: 100%;
+	height: 100%;
+	text-decoration: none;
+	outline: none;
+}
+
+.link-url input {
+	font-size: 20px;
+	width: 100%;
+	line-height: 22px;
+}
+textarea {
+	width: 50%;
+	min-height: 300px;
+}
+</style>
+<style type="text/css" id="links-map-style">
+	.teaser-container {
+		position: relative;
+		display: flex;
+	}
+	.teaser-1 {
+		width: 100%;
+		height: auto;
+		height: 100%;
+	}
+	.links-map {
+		position: absolute;
+	    display: flex;
+	    width: 100%;
+	    height: 100%;
+	    z-index: 1;
+	    top: 0;
+	}
+	.section-link {
+		display: block;
+		width: 100%;
+		height: 100%;
+		cursor: pointer;
+		text-decoration: none;
+		outline: none;
+	}
+</style>
+</head>
+<body>
+<div class="image-url">
+	<label for="input-image-URL">
+		<span>
+			Image URL:
+		</span>
+		<input type="text" name="imageURL" id="input-image-URL" onchange="inputChange(this);">
+	</label>
+	<span class="message"></span>
+</div>
+<div>
+	<button onclick="addSpliter();">New Splitter</button>
+</div>
+<div class="teaser-container" id="teaser-container">
+	<img src="T1-home-streetwear-de-kw09.jpg" id="teaser-1" class="teaser-1">
+	<div class="links-map"></div>
+	<div class="spliter-map" id="spliter-map"></div>
+</div>
+<div class="link-url">
+	<label for="input-link-URL">
+		<span>
+			Link URL:
+		</span>
+		<input type="text" name="linkURL" id="input-link-URL" onchange="linkChange(this);">
+	</label>
+	<span class="message"></span>
+</div>
+<div>
+<button id="export" onclick="exportAsCode()">Adition Export as HTML</button>
+<button id="exportMagento" onclick="exportAsMagentoCode()">Magento Export as HTML</button>
+</div>
+<label for="text-code">
+<div>Result</div>
+	<textarea id="text-code"></textarea>
+</label>
+<script>
+var urlContainer = document.querySelector(".image-url");
+var spliterMap = document.getElementById("spliter-map");
+var linkMap = document.querySelector(".links-map");
+var spliterPosList = [];
+var img = document.getElementById("teaser-1");
+img.onload = function(){
+urlContainer.querySelector(".message").textContent = "";
+};
+img.onerror = function(){
+urlContainer.querySelector(".message").textContent = "Error";
+}
+function inputChange(evt){
+	img.src = evt.value;
+}
+
+function linkChange(context){
+	var linkNode, idx;
+	if(activeContainer){
+		idx = activeContainer.getAttribute("idx");
+		linkNode = linkMap.children[idx].querySelector("a");
+		if(linkNode){
+			linkNode.href = context.value;
+		}
+	}
+}
+
+function exportAsCode(){
+	var teaserContainer = document.getElementById("teaser-container").cloneNode(true);
+	var spliters = teaserContainer.querySelector("#spliter-map");
+	teaserContainer.removeChild(spliters);
+	var style= document.getElementById("links-map-style");
+	var textArea = document.getElementById("text-code");
+	var containerCode = '<div class="teaser-container">' + teaserContainer.innerHTML.replace(/[\t]/gm,'') + '</div>';
+	var styleCode = '<style>'+ style.textContent.replace(/[\t]/gm,'')+'</style>';
+	var scriptText = '<script>;(function(){var section = document.getElementById("component-t1");var container = window.parent.document.getElementById("component-T1");document.getElementById("teaser-1").onload = function(){container && (container.innerHTML = section.innerHTML)}})()<\/script>';
+	textArea.value = '<section id="component-t1">'+styleCode + '\n'+ containerCode+'</section>\n' + scriptText;
+}
+
+function exportAsMagentoCode(){
+	var teaserContainer = document.getElementById("teaser-container").cloneNode(true);
+	var spliters = teaserContainer.querySelector("#spliter-map");
+	teaserContainer.removeChild(spliters);
+	var style= document.getElementById("links-map-style");
+	var textArea = document.getElementById("text-code");
+	var containerCode = '<div class="teaser-container">' + teaserContainer.innerHTML.replace(/[\t]/gm,'') + '</div>';
+	var hideMeStyle = '\n@keyframes hideme {0% {opacity: 0}100% { opacity: 1}}\n.teaser-1 {opacity: 0;animation-name: hideme; animation-duration: 0.2s;animation-delay: 1.5s;animation-fill-mode: forwards;}\n';
+	var styleCode = '<style>'+ hideMeStyle + style.textContent.replace(/[\t]/gm,'')+'</style>';
+
+	var scriptText = '<script src="/js/ux/srp.js"><\/script><script>var adition = adition || {}; adition.srq = adition.srq || [];adition.srq.push(function(api){api.registerAdfarm("onsite2.dev.ps-tek.de");api.configureRenderSlot("bannerSlot").setContentunitId(3844306);api.load().completeRendering();});adition.srq.push(function(api) {api.renderSlot("bannerSlot");});<\/script>';
+
+	textArea.value = ' <!-- COMPONENT BANNER -->\n<div class="bannerComponent" id="comp-T1">\n<div id="bannerSlot"></div>\n<section id="component-t1">'
+	+styleCode + '\n'+ containerCode+'\n</section>\n </div>\n'+ scriptText+'\n<!-- END COMPONENT -->' ;
+}
+
+var activeSpliterNode = null,
+	activeContainer = null,
+	leftLimit = 0,
+	rightLimit = 100;
+
+function addSpliter(){
+	var count = spliterPosList.length;
+	var lastIndex = count ? count : 0;
+	var delta = 10, leftOffset = 0;
+	if (count  && spliterPosList[lastIndex-1] < 100){
+		delta = spliterPosList[lastIndex-1] + 10;
+		leftOffset = spliterPosList[lastIndex-1];
+	}
+
+	var spliterContainer = document.createElement("div");
+	var spliterDiv = document.createElement("div");
+	var link = document.createElement("a");
+
+
+	spliterContainer.setAttribute("class", "spliterContainer");
+	spliterContainer.setAttribute("idx", count);
+	spliterContainer.style.flexBasis = (delta -leftOffset) + "%";
+	link.setAttribute("class", "section-link");
+	link.setAttribute("target", "_top");
+	link.innerHTML = "&nbsp";
+	link.href="#";
+	link.onclick = function(){return false;}
+	// spliterContainer.appendChild(link);
+
+	spliterContainer.onclick = function(){
+		selectContainer(this);
+	}
+
+	spliterDiv.setAttribute("class", "spliter");
+	spliterDiv.setAttribute("idx", count);
+
+	// spliterDiv.style.left = delta+"%";
+	spliterDiv.onmousedown = function () {
+		startMouse(this.parentNode);
+	};
+
+	var close = document.createElement("div");
+	close.setAttribute("class", "closeButton");
+	close.innerHTML = "&#10006;";
+	spliterDiv.appendChild(close);
+	close.onclick = function(){
+		var index = spliterPosList.length -1;
+		spliterMap.removeChild(spliterContainer);
+		linkMap.removeChild(div);
+		spliterPosList.splice(index,1);
+		adjustLinkMap();
+		console.log(spliterPosList)
+	}
+
+	spliterPosList.push(delta);
+
+	var div = document.createElement("div");
+	div.style.flexBasis = (delta -leftOffset) + "%";
+	div.appendChild(link);
+
+	linkMap.appendChild(div);
+
+	spliterContainer.appendChild(spliterDiv);
+
+	spliterMap.appendChild(spliterContainer);
+
+	console.log(spliterPosList);
+}
+
+function selectContainer(context){
+	var container = context.parentNode,
+		linkNode;
+	if (!container) return;
+	for(var item of container.childNodes){
+		item.style.backgroundColor = 'transparent';
+	}
+	context.style.backgroundColor = "rgba(255, 0, 0, 0.3)";
+	activeContainer = context;
+	var idx = activeContainer.getAttribute("idx");
+	linkNode = linkMap.children[idx].querySelector("a");
+	// linkNode = activeContainer.querySelector("a");
+	if(linkNode && linkNode.href ){
+		document.getElementById("input-link-URL").value = linkNode.href;
+	}
+
+}
+
+
+addSpliter();
+addSpliter();
+
+function removeSpliter(context){
+
+}
+
+spliterMap.addEventListener("mousemove", moveSpliter, false);
+spliterMap.addEventListener("mouseleave", deactivate, false);
+spliterMap.addEventListener("mouseup", deactivate, false);
+
+
+
+var offsetLeft = spliterMap.offsetLeft;
+
+
+function startMouse(context){
+	activeSpliterNode = context;
+	activeSpliterIndex = parseInt(activeSpliterNode.getAttribute("idx"),10);
+	if(spliterPosList.length > 1){
+		if (activeSpliterIndex){
+			console.log("HOP LEFT", leftLimit, spliterPosList[activeSpliterIndex-1])
+			leftLimit = spliterPosList[activeSpliterIndex-1];
+		}else{
+			leftLimit = 0;
+		}
+
+		if (activeSpliterIndex <  spliterPosList.length-1){
+			console.log("HOP RIGTH",  activeSpliterIndex, rightLimit, spliterPosList[activeSpliterIndex+1])
+			rightLimit = spliterPosList[activeSpliterIndex+1];
+		}else{
+			rightLimit = 100;
+		}
+	}else{
+		leftLimit = 0;
+		rightLimit = 100;
+	}
+}
+
+function deactivate(context){
+	activeSpliterNode = null;
+	activeSpliterIndex = null;
+	console.log("xxx", spliterMap.children)
+	adjustLinkMap();
+}
+
+function adjustLinkMap(){
+	var lenSpliterArray = spliterPosList.length,
+		lenLinkArray = spliterMap.children.length,
+		node;
+
+	for(var i = 0; i < lenLinkArray; i++ ){
+		divNode = linkMap.children[i];
+		splitNode = spliterMap.children[i];
+		if(i === 0){
+			divNode.setAttribute("idx", i);
+			splitNode.setAttribute("idx", i);
+			divNode.style.flexBasis = spliterPosList[0] + "%";
+			splitNode.style.flexBasis = spliterPosList[0] + "%";
+			continue;
+		}
+
+		if(i < lenSpliterArray && i > 0){
+			console.log("if",i,(spliterPosList[i] - spliterPosList[i-1]));
+			divNode.setAttribute("idx", i);
+			splitNode.setAttribute("idx", i);
+			divNode.style.flexBasis = (spliterPosList[i] - spliterPosList[i-1]) + "%";
+			splitNode.style.flexBasis =  (spliterPosList[i] - spliterPosList[i-1]) + "%";
+		}
+
+	}
+
+}
+
+function moveSpliter(evt){
+	if (activeSpliterNode){
+
+		var posP = (evt.pageX-offsetLeft)/spliterMap.clientWidth*100,
+			flexBasis = 0;
+		console.log("------- ", activeSpliterIndex, leftLimit, rightLimit, posP)
+		if (leftLimit > posP || rightLimit < posP) return;
+		// activeSpliterNode.style.flexBasis = posP+"%";
+		spliterPosList[activeSpliterIndex] = posP;
+		adjustLinkMap();
+		console.log(posP,evt, evt.pageX, offsetLeft);
+	}
+}
+
+</script>
+
+
+
+</body>
+</html>
