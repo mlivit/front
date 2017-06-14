@@ -208,7 +208,7 @@ function exportAsMagentoCode(){
 	var hideMeStyle = '\n@keyframes hideme {0% {opacity: 0}100% { opacity: 1}}\n.teaser-1 {opacity: 0;animation-name: hideme; animation-duration: 0.2s;animation-delay: 1.5s;animation-fill-mode: forwards;}\n';
 	var styleCode = '<style>'+ hideMeStyle + style.textContent.replace(/[\t]/gm,'')+'</style>';
 
-	var scriptText = '<script src="/js/ux/srp.js"><\/script><script>var adition = adition || {}; adition.srq = adition.srq || [];adition.srq.push(function(api){api.registerAdfarm("onsite2.stable.ps-tek.de");api.configureRenderSlot("bannerSlot").setContentunitId(3886140);api.load().completeRendering();});adition.srq.push(function(api) {api.renderSlot("bannerSlot");});<\/script>';
+	var scriptText = '<script src="/js/ux/srp.js"><\/script><script>var adition = adition || {}; adition.srq = adition.srq || [];adition.srq.push(function(api){api.registerAdfarm("onsite2.stable.ps-tek.de");api.configureRenderSlot("bannerSlot").setContentunitId(3888076);api.load().completeRendering();});adition.srq.push(function(api) {api.renderSlot("bannerSlot");});<\/script>';
 
 	textArea.value = ' <!-- COMPONENT BANNER -->\n<div class="bannerComponent" id="component-T1">\n<div id="bannerSlot" style="display: none"></div>\n<section id="component-t1">'
 	+styleCode + '\n'+ containerCode+'\n</section>\n </div>\n'+ scriptText+'\n<!-- END COMPONENT -->' ;
