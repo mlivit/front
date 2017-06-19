@@ -151,7 +151,8 @@
         <button onclick="addSpliter();">New Splitter</button>
     </div>
     <div class="teaser-container" id="teaser-container">
-        <img src="data:image/gif;base64,R0lGODlhewAhAIAAAP///////yH5BAEKAAEALAAAAAB7ACEAAAJEjI+py+0Po5y02ouz3rz7D4biSJbmiabqyrbuC8fyTNf2jef6zvf+DwwKh8Si8YhMKpfMpvMJjUqn1Kr1is1qt9yurgAAOw==" id="teaser-1" class="teaser-1">
+        <img src="data:image/gif;base64,R0lGODlhewAhAIAAAP///////yH5BAEKAAEALAAAAAB7ACEAAAJEjI+py+0Po5y02ouz3rz7D4biSJbmiabqyrbuC8fyTNf2jef6zvf+DwwKh8Si8YhMKpfMpvMJjUqn1Kr1is1qt9yurgAAOw==" data-img=src="data:image/gif;base64,R0lGODlhewAhAIAAAP///////yH5BAEKAAEALAAAAAB7ACEAAAJEjI+py+0Po5y02ouz3rz7D4biSJbmiabqyrbuC8fyTNf2jef6zvf+DwwKh8Si8YhMKpfMpvMJjUqn1Kr1is1qt9yurgAAOw=="
+            id="teaser-1" class="teaser-1">
         <div class="links-map"></div>
         <div class="spliter-map" id="spliter-map"></div>
     </div>
@@ -187,6 +188,7 @@
 
         function inputChange(evt) {
             img.src = evt.value;
+            img.setArrtibute("data-src", evt.value);
         }
 
         function linkChange(context) {
@@ -204,11 +206,13 @@
             var teaserContainer = document.getElementById("teaser-container").cloneNode(true);
             var spliters = teaserContainer.querySelector("#spliter-map");
             teaserContainer.removeChild(spliters);
+            var img = teaserContainer.querySelector("#teaser-1");
+            img.src = img.getAttribute("data-img");
             var style = document.getElementById("links-map-style");
             var textArea = document.getElementById("text-code");
             var containerCode = '<div class="teaser-container">' + teaserContainer.innerHTML.replace(/[\t]/gm, '') + '</div>';
             var styleCode = '<style>' + style.textContent.replace(/[\t]/gm, '') + '</style>';
-            var scriptText = '<script>;(function(){var section = document.getElementById("component-t1");var container = window.parent.document.getElementById("component-T1");document.getElementById("teaser-1").onload = function(){container && (container.innerHTML = section.innerHTML)}})()<\/script>';
+            var scriptText = '<script>;(function(){var section = document.getElementById("component-t1");var container = window.parent.document.getElementById("component-T1");container && (container.innerHTML = section.innerHTML);var t1=document.getElementById("teaser-1");t1.src = t1.getAttribute("data-src");})()<\/script>';
             textArea.value = '<section id="component-t1">' + styleCode + '\n' + containerCode + '</section>\n' + scriptText;
         }
 
