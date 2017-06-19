@@ -212,7 +212,7 @@
             var textArea = document.getElementById("text-code");
             var containerCode = '<div class="teaser-container">' + teaserContainer.innerHTML.replace(/[\t]/gm, '') + '</div>';
             var styleCode = '<style>' + style.textContent.replace(/[\t]/gm, '') + '</style>';
-            var scriptText = '<script>;(function(){var e,n=document.getElementById("component-t1"),t=window.parent.document.getElementById("component-T1");e=document.getElementById("teaser-1");var o=new Image;o.src=e.getAttribute("data-src"),t&&(t.innerHTML=n.innerHTML,o.onload=function(){e.section=this.src})})();<\/script>';
+            var scriptText = '<script>;(function(){var e,n=document.getElementById("component-t1"),t=window.parent.document.getElementById("component-T1");e=document.getElementById("teaser-1");var o=new Image;o.src=e.getAttribute("data-src"),t&&(t.innerHTML=n.innerHTML,o.onload=function(){e.src=this.src})})();<\/script>';
             textArea.value = '<section id="component-t1">' + styleCode + '\n' + containerCode + '</section>\n' + scriptText;
         }
 
