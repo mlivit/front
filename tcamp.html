@@ -1,0 +1,295 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>be createaser ;)</title>
+    <style>
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+        
+        img {
+            height: auto;
+            width: 100%;
+        }
+        
+        .slick-slide {
+            padding-bottom: 0;
+            position: relative;
+            display: block;
+            float: left;
+            white-space: nowrap;
+            text-align: center;
+        }
+        
+        .slick-slide:nth-child(1) {
+            margin-bottom: 4px;
+            width: 100%!important
+        }
+        
+        .slick-slide:nth-child(2),
+        .slick-slide:nth-child(3) {
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+            width: 50%!important;
+        }
+        
+        .slick-slide:nth-child(2) {
+            padding-right: 2px
+        }
+        
+        .slick-slide:nth-child(3) {
+            padding-left: 2px
+        }
+        
+        .slick-slide .links {
+            bottom: 20px;
+            position: absolute;
+            white-space: nowrap;
+            width: 100%
+        }
+        
+        .slick-slide .links.align-left {
+            left: 0;
+            width: 50%
+        }
+        
+        .slick-slide .links.align-right {
+            right: 0;
+            width: 50%
+        }
+        
+        .slick-slide a {
+            border-color: #fff
+        }
+        
+        .slick-slide a {
+            background: #fff;
+            -webkit-border-radius: 5px;
+            -moz-border-radius: 5px;
+            border-radius: 5px;
+            color: #1b213f;
+            font-size: 20px;
+            display: inline-block;
+            margin: 5px;
+            padding: 9px 30px;
+            text-decoration: none;
+            text-align: center;
+            outline: 0;
+        }
+        
+        .intrinsic {
+            display: block;
+            position: relative;
+            height: 0;
+            width: 100%;
+            padding-bottom: 41.044%;
+            background-color: #ccc;
+        }
+        
+        .intrinsic-img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .intrinsic-desktop {
+            padding-bottom: 41.044% !important;
+        }
+        
+        .intrinsic-mobile {
+            padding-bottom: 78.125% !important;
+        }
+        
+        #toolbox {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            padding: 5px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 1;
+            text-align: left;
+            background-color: #fbd2d2;
+        }
+        
+        .links #toolbox {
+            top: -40px;
+        }
+        
+        #toolbox span {
+            margin: 0 5px;
+            color: red;
+        }
+        
+        #focus-url {
+            width: 99%;
+            border: 1px solid #ccc;
+            font-size: 18px;
+            background-color: #f5eeb4;
+            outline: 0;
+            padding: 3px;
+            flex-grow: 2;
+        }
+        
+        .red {
+            border: 1px solid red;
+        }
+        
+        section {
+            display: block;
+            width: 100%;
+            margin: 5px;
+        }
+        
+        section.mobile {
+            max-width: 480px;
+            margin: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <section id="be-createaser">
+        <div class="slick-slide">
+            <picture class="intrinsic">
+                <source srcset="https://res.cloudinary.com/twentyonerun/image/upload/banner-campaigns/T1-desktop-home-run-de.jpg" media="(min-width: 768px)">
+                <img srcset="https://res.cloudinary.com/twentyonerun/image/upload/banner-campaigns/T1-mobile-home-run-de.jpg" alt="…" class="intrinsic-img">
+            </picture>
+            <div class="links align-left">
+                <a href="" contenteditable>Neu für Damen</a>
+                <a href="" contenteditable>Neu für Herren</a>
+            </div>
+        </div>
+        <div class="slick-slide">
+            <picture>
+                <source srcset="https://res.cloudinary.com/twentyonerun/image/upload/banner-campaigns/T2-desktop-home-adidas-de.jpg" media="(min-width: 768px)">
+                <img srcset="https://res.cloudinary.com/twentyonerun/image/upload/banner-campaigns/T2-mobile-home-adidas.jpg" alt="…">
+            </picture>
+            <div class="links">
+                <a href="" contenteditable>Damen</a>
+                <a href="" contenteditable>Herren</a>
+            </div>
+        </div>
+        <div class="slick-slide">
+            <picture>
+                <source srcset="https://res.cloudinary.com/twentyonerun/image/upload/v1498216456/banner-campaigns/T2-desktop-home-nike-de.jpg" media="(min-width: 768px)">
+                <img srcset="https://res.cloudinary.com/twentyonerun/image/upload/banner-campaigns/T2-mobile-home-nike.jpg" alt="…">
+            </picture class="intrinsic">
+            <div class="links">
+                <a href="" contenteditable>Jetzt entdecken</a>
+            </div>
+        </div>
+    </section>
+
+    <div id="toolbox">
+        <input type="text" id="focus-url">
+        <div>
+            <button id="device-type">Desktop</button>
+            <button id="new-link">New Link</button>
+            <button>Export</button>
+        </div>
+    </div>
+
+    <script>
+        var beaser = document.getElementById("be-createaser"),
+            toolbox = document.getElementById("toolbox"),
+            inputURL = document.getElementById("focus-url"),
+            deviceType = document.getElementById("device-type"),
+            newLink = document.getElementById("new-link"),
+            tags = ["IMG", "A"],
+            mediaString = "",
+            isMobile = false,
+            selected = null;
+
+        inputURL.addEventListener("input", function(evt) {
+            var picture, _isMobile;
+            if (selected && this.value) {
+                if (selected.getAttribute("srcset")) {
+                    picture = selected.parentNode;
+                    _isMobile = getIsMobile(picture);
+                    picture.querySelector(_isMobile ? "img" : "source")
+                        .setAttribute("srcset", this.value);
+                } else selected.setAttribute("href", this.value);
+            }
+        });
+
+
+        deviceType.addEventListener("click", function() {
+            if (selected.tagName == "IMG") {
+                toggleMobileImg(selected.parentNode);
+                inputURL.value = getSrcset(selected.parentNode);
+            }
+        });
+
+        beaser.addEventListener("click", function(evt) {
+            var target = evt.target;
+            switch (target.tagName) {
+                case "IMG":
+                    inputURL.value = getSrcset(target.parentNode);
+                    deviceType.textContent = (getIsMobile(target.parentNode) ? "Mobile" : "Desktop");
+                    deviceType.style.display = "";
+                    newLink.style.display = "none";
+                    break;
+                case "A":
+                    inputURL.value = target.getAttribute("href") || "";
+                    deviceType.style.display = "none";
+                    newLink.style.display = "";
+                    break;
+                default:
+
+                    return;
+            }
+
+            selected && selected.classList.remove("red");
+            selected = target;
+            selected.classList.add("red");
+            target.parentNode.insertBefore(toolbox, target);
+            selected && (toolbox.style.display = "");
+
+            console.log(target.tagName, target.parentNode)
+        });
+
+
+        function getSrcset(picture) {
+            return picture.querySelector(getIsMobile(picture) ? "img" : "source").srcset;
+        }
+
+        function getIsMobile(picture) {
+            var source = picture.querySelector("source");
+            return source.getAttribute("media") == "(max-width:480px)";
+        }
+
+        function toggleMobileImg(picture) {
+            var _isMobile = getIsMobile(picture);
+
+            mediaString = !_isMobile ? "(max-width:480px)" : "(min-width:768px)";
+            deviceType.textContent = (!_isMobile ? "Mobile" : "Desktop");
+            setPictureMeida(picture, mediaString);
+
+        }
+
+        function setPictureMeida(picture, mediaString) {
+            var source = picture.querySelector("source");
+            if (source) {
+                source.setAttribute("media", mediaString);
+                picture.classList.toggle("intrinsic-mobile")
+            }
+            console.log(source.getAttribute("media"), mediaString)
+        }
+
+        (function() {
+            !selected && (toolbox.style.display = "none");
+        })();
+    </script>
+</body>
+
+</html>
