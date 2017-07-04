@@ -1,0 +1,47 @@
+<div id="slot-T1">
+    <style>
+        .intrinsic {
+            display: block;
+            position: relative;
+            height: 0;
+            width: 100%;
+            padding-bottom: 41.044%;
+            background-color: #fefefe;
+        }
+        
+        .intrinsic-img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .intrinsic-desktop {
+            padding-bottom: 41.044% !important;
+        }
+        
+        .intrinsic-mobile {
+            padding-bottom: 78.125% !important;
+        }
+        
+        .fade-in {
+            opacity: 1;
+        }
+    </style>
+    <picture class="intrinsic">
+        <source srcset="https://res.cloudinary.com/twentyonerun/image/upload/banner-campaigns/T1-desktop-home-run-de.jpg" media="(min-width: 768px)">
+        <img srcset="https://res.cloudinary.com/twentyonerun/image/upload/banner-campaigns/T1-mobile-home-run-de.jpg" alt="…" class="intrinsic-img">
+    </picture>
+    <div class="links align-left">
+        <a href="" contenteditable>Neu für Damen</a>
+        <a href="" contenteditable>Neu für Herren</a>
+    </div>
+
+</div>
+<script>
+    (function() {
+        var slot = document.getElementById("slot-T1");
+        window.parent.insert_T1 && window.parent.insert_T1(slot);
+    })();
+</script>

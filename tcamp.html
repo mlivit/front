@@ -83,31 +83,6 @@
             outline: 0;
         }
         
-        .intrinsic {
-            display: block;
-            position: relative;
-            height: 0;
-            width: 100%;
-            padding-bottom: 41.044%;
-            background-color: #ccc;
-        }
-        
-        .intrinsic-img {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-        }
-        
-        .intrinsic-desktop {
-            padding-bottom: 41.044% !important;
-        }
-        
-        .intrinsic-mobile {
-            padding-bottom: 78.125% !important;
-        }
-        
         #toolbox {
             display: flex;
             flex-direction: column;
@@ -154,21 +129,102 @@
             max-width: 480px;
             margin: auto;
         }
+        
+        .intrinsic {
+            display: block;
+            position: relative;
+            height: 0;
+            width: 100%;
+            padding-bottom: 41.044%;
+            background-color: #ccc;
+        }
+        
+        .intrinsic-img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .intrinsic-desktop {
+            padding-bottom: 41.044% !important;
+        }
+        
+        .intrinsic-mobile {
+            padding-bottom: 78.125% !important;
+        }
     </style>
 </head>
 
 <body>
     <section id="be-createaser">
-        <div class="slick-slide">
-            <picture class="intrinsic">
+
+        <div class="slick-slide" id="slot-1">
+            <style>
+                .intrinsic-1 {
+                    display: block;
+                    position: relative;
+                    height: 0;
+                    width: 100%;
+                    padding-bottom: 41.044%;
+                    background-color: #ccc;
+                    opacity: 0;
+                    transition-property: opacity;
+                    transition-duration: 0.5s;
+                    transition-timing-function: linear;
+                }
+                
+                .intrinsic-img-1 {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                }
+                
+                .intrinsic-desktop-1 {
+                    padding-bottom: 41.044% !important;
+                }
+                
+                .intrinsic-mobile-1 {
+                    padding-bottom: 78.125% !important;
+                }
+                
+                .fade-in {
+                    opacity: 1;
+                }
+            </style>
+            <picture class="intrinsic-1">
                 <source srcset="https://res.cloudinary.com/twentyonerun/image/upload/banner-campaigns/T1-desktop-home-run-de.jpg" media="(min-width: 768px)">
-                <img srcset="https://res.cloudinary.com/twentyonerun/image/upload/banner-campaigns/T1-mobile-home-run-de.jpg" alt="…" class="intrinsic-img">
+                <img srcset="https://res.cloudinary.com/twentyonerun/image/upload/banner-campaigns/T1-mobile-home-run-de.jpg" alt="…" class="intrinsic-img-1">
             </picture>
             <div class="links align-left">
                 <a href="" contenteditable>Neu für Damen</a>
                 <a href="" contenteditable>Neu für Herren</a>
             </div>
+
         </div>
+        <script>
+            (function() {
+                var slot = document.getElementById("slot-1"),
+                    renderSlot = window.parent.document.getElementById("renderSlot-1"),
+                    loaderSlot = window.parent.document.getElementById("renderSlot-1fb");
+                var picture = slot.querySelector("picture");
+
+                picture.querySelector("img").addEventListener("load", function() {
+                    picture.classList.add("fade-in");
+                });
+                picture.classList.add((window.parent.innerWidth < 768) ? "intrinsic-mobile-1" : "intrinsic-desktop-1")
+                if (renderSlot) {
+                    renderSlot.parentNode.insertBefore(slot, renderSlot);
+                    slot.classList.remove("slick-slide");
+                    renderSlot.parentNode.removeChild(renderSlot);
+                    loaderSlot.parentNode.removeChild(loaderSlot);
+                    //loaderSlot && (loaderSlot.style.display = "none");
+                }
+            })();
+        </script>
         <div class="slick-slide">
             <picture>
                 <source srcset="https://res.cloudinary.com/twentyonerun/image/upload/banner-campaigns/T2-desktop-home-adidas-de.jpg" media="(min-width: 768px)">

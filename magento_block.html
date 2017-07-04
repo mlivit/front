@@ -1,0 +1,156 @@
+<!-- START T1 -->
+<div class="slick-slide">
+    <!--<script src="/js/ux/srp.js" async="true"></script>-->
+    <script>
+        var adition = adition || {};
+        adition.srq = adition.srq || [];
+        adition.jp = adition.jp || {};
+        adition.jp.h = function(l) {
+            var content = l.b[0];
+            res = content.c.replace(/\x3C/gi, '<').replace(/\n/gi, '');
+            res1 = res.match(/<!-- START T1 --> (.*?) <!-- END T1 -->/);
+            console.log("CONTENT", content, res, res1);
+        }
+
+        var FALLBACK_TIMEOUT = 3000; //3 sec.
+
+        function initTeaser(slot, unitId) {
+            if (!slot || !unitId) {
+                console.log("Adition: Slot and/or unitId not defined");
+                return;
+            }
+            var farmUrl = "onsite2.stable.ps-tek.de";
+            adition.srq.push(function(api) {
+                api.registerAdfarm(farmUrl);
+                api.configureRenderSlot(slot).setContentunitId(unitId);
+                api.load().completeRendering();
+            });
+            adition.srq.push(function(api) {
+                api.renderSlot(slot);
+            });
+        }
+
+        function initRemoteTeaser(slot, loaderSlot, srcset) {
+            var slotNode = document.getElementById(slot),
+                loaderSlot = document.getElementById(loaderSlot),
+                origin = window.parent;
+            var deviceClass = (origin.innerWidth < 768) ? "intrinsic-mobile" : "intrinsic-desktop";
+            var timer = setTimeout(function() {
+                var picture = loaderSlot.querySelector("picture");
+                picture.classList.toggle(deviceClass);
+                picture.innerHTML = srcset || "";
+            }, FALLBACK_TIMEOUT);
+
+            return function(remoteSlot) {
+                var picture = remoteSlot.querySelector("picture");
+
+                if (picture.classList.contains("intrinsic")) {
+                    picture.querySelector("img").addEventListener("load", function() {
+                        picture.classList.add("fade-in");
+                        picture.classList.add(deviceClass)
+                    });
+                    window.addEventListener("resize", function() {
+                        picture.classList.toggle((origin.innerWidth > 768) ? "intrinsic-mobile" : "intrinsic-desktop");
+                    });
+                }
+
+                if (slotNode) {
+                    clearTimeout(timer);
+                    slotNode.parentNode.insertBefore(remoteSlot, slotNode);
+                    slotNode.parentNode.removeChild(slotNode);
+                    loaderSlot.parentNode.removeChild(loaderSlot);
+                }
+
+            }
+        }
+    </script>
+    <script src="https://onsite2.stable.ps-tek.de/s?t=i92l2U0&v=1&w=1610527622&a=1&b=8&f=0&o=14&r=NaN&s=3892631">
+    </script>
+    <div id="renderSlot-T1" style="display:none"></div>
+    <div id="loaderSlot-T1">
+        <style>
+            .intrinsic {
+                display: block;
+                position: relative;
+                height: 0;
+                width: 100%;
+                padding-bottom: 41.044%;
+                background-color: #fefefe;
+            }
+            
+            .intrinsic-img {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+            }
+            
+            .intrinsic-desktop {
+                padding-bottom: 41.044% !important;
+            }
+            
+            .intrinsic-mobile {
+                padding-bottom: 78.125% !important;
+            }
+        </style>
+        <picture class="intrinsic">
+            <source srcset="data:image/gif;base64,R0lGODlhBwAEAIAAAP///////yH5BAEKAAEALAAAAAAHAAQAAAIEjI+pWwA7" media="(min-width: 768px)">
+            <img srcset="data:image/gif;base64,R0lGODlhCQAHAIAAAP///////yH5BAEKAAEALAAAAAAJAAcAAAIHjI+py+1cAAA7">
+        </picture>
+        <div class="links align-left">
+            <a href="">Neu für Damen</a>
+            <a href="">Neu für Herren</a>
+        </div>
+        <script>
+            initTeaser("renderSlot-T1", 3892631);
+            var srcset_T1 = '<source srcset="https://res.cloudinary.com/twentyonerun/image/upload/banner-campaigns/T1-desktop-home-run-de.jpg" media="(min-width: 768px)">' +
+                '<img srcset="https://res.cloudinary.com/twentyonerun/image/upload/banner-campaigns/T1-mobile-home-run-de.jpg" alt="…" class="intrinsic-img">'
+            var insert_T1 = initRemoteTeaser("renderSlot-T1", "loaderSlot-T1", srcset_T1);
+        </script>
+    </div>
+</div>
+<!-- END T1 -->
+
+<!-- START T2-LEFT -->
+<div class="slick-slide">
+    <div id="renderSlot-T2L" style="display:none"></div>
+    <div id="loaderSlot-T2L">
+        <picture>
+            <source srcset="data:image/gif;base64,R0lGODlhBwAEAIAAAP///////yH5BAEKAAEALAAAAAAHAAQAAAIEjI+pWwA7" media="(min-width: 768px)">
+            <img srcset="data:image/gif;base64,R0lGODlhCQAHAIAAAP///////yH5BAEKAAEALAAAAAAJAAcAAAIHjI+py+1cAAA7">
+        </picture>
+        <div class="links">
+            <a href="">Damen</a>
+            <a href="">Herren</a>
+        </div>
+        <script>
+            initTeaser("renderSlot-T2L", 3898847);
+            var srcset_T2L = '<source srcset="https://res.cloudinary.com/twentyonerun/image/upload/banner-campaigns/T2-desktop-home-adidas-de.jpg" media="(min-width: 768px)">' +
+                '<img srcset="https://res.cloudinary.com/twentyonerun/image/upload/banner-campaigns/T2-mobile-home-adidas.jpg" alt="…">'
+            var insert_T2L = initRemoteTeaser("renderSlot-T2L", "loaderSlot-T2L", srcset_T2L);
+        </script>
+    </div>
+</div>
+<!-- END T2-LEFT -->
+
+<!-- START T2-RIGHT -->
+<div class="slick-slide">
+    <div id="renderSlot-T2R" style="display:none"></div>
+    <div id="loaderSlot-T2R">
+        <picture>
+            <source srcset="data:image/gif;base64,R0lGODlhBwAEAIAAAP///////yH5BAEKAAEALAAAAAAHAAQAAAIEjI+pWwA7" media="(min-width: 768px)">
+            <img srcset="data:image/gif;base64,R0lGODlhCQAHAIAAAP///////yH5BAEKAAEALAAAAAAJAAcAAAIHjI+py+1cAAA7">
+        </picture>
+        <div class="links">
+            <a href="">Jetzt entdecken</a>
+        </div>
+        <script>
+            initTeaser("renderSlot-T2R", 3898848);
+            var srcset_T2R = '<source srcset="https://res.cloudinary.com/twentyonerun/image/upload/v1498216456/banner-campaigns/T2-desktop-home-nike-de.jpg" media="(min-width: 768px)">' +
+                '<img srcset="https://res.cloudinary.com/twentyonerun/image/upload/banner-campaigns/T2-mobile-home-nike.jpg" alt="…">'
+            var insert_T2R = initRemoteTeaser("renderSlot-T2R", "loaderSlot-T2R", srcset_T2R);
+        </script>
+    </div>
+</div>
+<!-- END T2-RIGHT -->
