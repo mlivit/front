@@ -8,7 +8,7 @@
         adition.jp.h = function(l) {
             var content = l.b[0];
             res = content.c.replace(/\x3C/gi, '<').replace(/\n/gi, '');
-            res1 = res.match(/<!-- START T1 --> (.*?) <!-- END T1 -->/);
+            res1 = res.match(/<!-- START T1 -->(.*?)<!-- END T1 -->/);
             console.log("CONTENT", content, res, res1);
         }
 
